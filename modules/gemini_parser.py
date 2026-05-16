@@ -36,7 +36,7 @@ def parse_script(script_text: str, api_key: str):
     """
     
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash",
         contents=prompt
     )
     
@@ -120,7 +120,7 @@ def parse_script_with_slides(script_text: str, slide_texts: list, api_key: str, 
             contents.append(types.Part.from_bytes(data=img_bytes, mime_type="image/png"))
     
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash",
         contents=contents
     )
     
