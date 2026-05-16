@@ -15,16 +15,23 @@ st.set_page_config(page_title="AI Video Generator", page_icon="🎬", layout="wi
 st.title("🎬 AI Script-to-Video Generator (Từ PDF Slide)")
 st.markdown("Biến file PDF Slide và Kịch bản thành Video Slideshow lồng tiếng tự động.")
 
+# Hàm đọc key: ưu tiên st.secrets (Cloud) → os.getenv (.env local)
+def get_secret(key, default=""):
+    try:
+        return st.secrets[key]
+    except:
+        return os.getenv(key, default)
+
 # --- CẤU HÌNH API KEYS (SIDEBAR) ---
 st.sidebar.header("⚙️ Cài đặt API Keys")
-st.sidebar.markdown("API Key được đọc tự động từ file `.env`. Bạn cũng có thể nhập trực tiếp bên dưới.")
+st.sidebar.markdown("API Key được đọc tự động. Bạn cũng có thể nhập trực tiếp bên dưới.")
 
-gemini_key = st.sidebar.text_input("Gemini API Key (Bắt buộc)", value=os.getenv("GEMINI_API_KEY", ""), type="password")
+gemini_key = st.sidebar.text_input("Gemini API Key (Bắt buộc)", value=get_secret("GEMINI_API_KEY"), type="password")
 st.sidebar.markdown("[👉 Lấy Gemini Key miễn phí](https://aistudio.google.com/app/apikey)", unsafe_allow_html=True)
 
-elevenlabs_key = st.sidebar.text_input("ElevenLabs API Key (Tuỳ chọn)", value=os.getenv("ELEVENLABS_API_KEY", ""), type="password")
+elevenlabs_key = st.sidebar.text_input("ElevenLabs API Key (Tuỳ chọn)", value=get_secret("ELEVENLABS_API_KEY"), type="password")
 st.sidebar.markdown("[👉 Lấy ElevenLabs Key](https://elevenlabs.io/app/settings/api-keys)", unsafe_allow_html=True)
-elevenlabs_voice_id = st.sidebar.text_input("ElevenLabs Voice ID", value=os.getenv("ELEVENLABS_VOICE_ID", "pNInz6obpgDQGcFmaJgB"))
+elevenlabs_voice_id = st.sidebar.text_input("ElevenLabs Voice ID", value=get_secret("ELEVENLABS_VOICE_ID", "pNInz6obpgDQGcFmaJgB"))
 
 st.sidebar.header("🗣️ Cấu hình Giọng đọc")
 audio_provider = st.sidebar.selectbox("Nguồn tạo giọng đọc", ["edge-tts", "elevenlabs"], index=0, format_func=lambda x: "Microsoft Edge TTS (Miễn phí - Cực mượt)" if x=="edge-tts" else "ElevenLabs (Trả phí)")
