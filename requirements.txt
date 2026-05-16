@@ -1,0 +1,9 @@
+streamlit
+google-genai
+elevenlabs
+moviepy
+edge-tts
+requests
+python-dotenv
+Pillow
+pymupdf

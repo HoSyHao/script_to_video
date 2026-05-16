@@ -1,0 +1,6 @@
+.env
+assets/
+bgm_samples/
+output_video.mp4
+__pycache__/
+*.pyc
